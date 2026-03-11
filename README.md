@@ -1,3 +1,3 @@
 # Ohjelmistotekniikka harjoitustyö
-Olen **tekemässä** *pokeripeliä*
+Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
 https://github.com/juusolinja/ot-harjoitustyo/tree/main/laskarit
