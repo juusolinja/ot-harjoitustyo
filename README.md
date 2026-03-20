@@ -2,5 +2,9 @@
 
 Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
 
-[Laskarit](https://github.com/juusolinja/ot-harjoitustyo/tree/main/laskarit)
+[Laskarit](laskarit)
+
+## Dokumentaatio
+- [Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)
+- [Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)
 
