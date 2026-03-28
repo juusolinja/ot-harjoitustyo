@@ -22,4 +22,4 @@ def coverage_report(ctx):
 
 @task(coverage_report)
 def open_coverage_report(ctx):
-    ctx.run("open htmlcov/index.html", pty=True)
+    ctx.run("open htmlcov/index.html")
