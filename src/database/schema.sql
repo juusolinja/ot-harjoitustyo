@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS workouts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date DATE,
+    notes TEXT
+);

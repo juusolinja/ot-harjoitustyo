@@ -2,3 +2,7 @@
 __pycache__
 .coverage
 htmlcov
+.vscode
+.DS_Store
+data/test.db
+data/database_dev.db
