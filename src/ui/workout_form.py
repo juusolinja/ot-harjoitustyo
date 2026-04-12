@@ -199,6 +199,7 @@ class WorkoutForm:
         self.save_button.configure(state="normal")
         self._new_set_button.configure(state="normal")
         self.add_update_button.configure(state="normal")
+        self.delete_set_button.configure(state="disabled")
 
     def _handle_save(self):
         errors = workout_service.validate_workout()
@@ -242,7 +243,7 @@ class WorkoutForm:
         self.delete_set_button.configure(state="normal")
         self.add_update_button.configure(state="normal")
         s = self._pending_sets[self._selected_set_index]
-        self._movement_var.set(s["movement_name"])
+        self._movement_var.set(s["movement"].name)
         self._weight_var.set(s["weight"])
         self._reps_var.set(s["reps"])
         self._rir_var.set(s["rir"])
@@ -285,18 +286,19 @@ class WorkoutForm:
         self._selected_set_index = None
         self._clear_set_entries()
         self._refresh_sets_tree()
+        self.delete_set_button.configure(state="disabled")
 
     def _refresh_sets_tree(self):
         self._clear_set_tree()
         current_movement = None
         parent_iid = None
         for i, s in enumerate(self._pending_sets):
-            if s["movement_name"] != current_movement:
+            if current_movement is None or s["movement"].name != current_movement.name:
                 parent_iid = self._sets_tree.insert("", constants.END,
-                                                    text=s["movement_name"],
+                                                    text=s["movement"].name,
                                                     open=True
                                                     )
-                current_movement = s["movement_name"]
+                current_movement = s["movement"]
             self._sets_tree.insert(parent_iid, constants.END,
                                    iid=str(i),
                                    values=(s["weight"], s["reps"], s["rir"])
@@ -327,8 +329,7 @@ class WorkoutForm:
 
         self._pending_sets = [
             {
-                "movement_id": s.movement_id,
-                "movement_name": s.movement_name,
+                "movement": s.movement,
                 "weight": s.weight,
                 "reps": s.reps,
                 "rir": s.rir,
@@ -339,3 +340,5 @@ class WorkoutForm:
         self.save_button.configure(state="normal")
         self.cancel_button.configure(state="normal")
         self.delete_workout_button.configure(state="normal")
+        self._new_set_button.configure(state="normal")
+        self.delete_set_button.configure(state="disabled")

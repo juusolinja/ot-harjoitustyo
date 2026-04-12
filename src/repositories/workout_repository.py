@@ -117,7 +117,7 @@ class WorkoutRepository:
                     INSERT INTO set_entries (workout_id, movement_id, set_order, reps, weight, rir)
                     VALUES (?, ?, ?, ?, ?, ?)
                     """,
-                    (workout.id, s.movement_id, i, s.reps, s.weight, s.rir)
+                    (workout.id, s.movement.id, i, s.reps, s.weight, s.rir)
                 )
             self._connection.commit()
             return workout
