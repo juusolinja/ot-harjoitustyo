@@ -5,4 +5,4 @@ htmlcov
 .vscode
 .DS_Store
 data/test.db
-data/database_dev.db
+data/database.db
