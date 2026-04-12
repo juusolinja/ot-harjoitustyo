@@ -1,5 +1,28 @@
 CREATE TABLE IF NOT EXISTS workouts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date DATE,
-    notes TEXT
+    date TEXT NOT NULL CHECK(date LIKE '____-__-__'),
+    title TEXT,
+    notes TEXT,
+    duration INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS movements (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    primary_muscle_group_id INTEGER NOT NULL REFERENCES muscle_groups(id)
+);
+
+CREATE TABLE IF NOT EXISTS muscle_groups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS set_entries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    workout_id INTEGER NOT NULL REFERENCES workouts(id) ON DELETE CASCADE,
+    movement_id INTEGER NOT NULL REFERENCES movements(id),
+    set_order INTEGER NOT NULL,
+    reps INTEGER NOT NULL,
+    weight REAL NOT NULL,
+    rir INTEGER
 );

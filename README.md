@@ -6,6 +6,7 @@ Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
 - [Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)
 - [Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)
 - [Changelog](dokumentaatio/changelog.md)
+- [Arkkitehtuurikuvaus](dokumentaatio/arkkitehtuuri.md)
 
 ## Sovelluksen asennus ja käynnistys
 

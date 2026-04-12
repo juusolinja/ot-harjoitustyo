@@ -1,0 +1,27 @@
+[
+    {"name": "Flat Barbell Bench Press", "primary_muscle_group": "Chest"},
+    {"name": "Incline Dumbbell Bench Press", "primary_muscle_group": "Chest"},
+    {"name": "Cable Fly", "primary_muscle_group": "Chest"},
+
+    {"name": "Barbell Overhead Press", "primary_muscle_group": "Front Delt"},
+    {"name": "Dumbbell Lateral Raise", "primary_muscle_group": "Side Delt"},
+    {"name": "Face Pull", "primary_muscle_group": "Rear Delt"},
+
+    {"name": "Pull-Up", "primary_muscle_group": "Back"},
+    {"name": "Barbell Row", "primary_muscle_group": "Back"},
+    {"name": "Lat Pulldown", "primary_muscle_group": "Back"},
+
+    {"name": "Barbell Curl", "primary_muscle_group": "Biceps"},
+    {"name": "Tricep Pushdown", "primary_muscle_group": "Triceps"},
+    {"name": "Skull Crusher", "primary_muscle_group": "Triceps"},
+
+    {"name": "Barbell Back Squat", "primary_muscle_group": "Quads"},
+    {"name": "Leg Press", "primary_muscle_group": "Quads"},
+    {"name": "Leg Extension", "primary_muscle_group": "Quads"},
+
+    {"name": "Barbell RDL", "primary_muscle_group": "Hamstrings"},
+    {"name": "Lying Hamstring Curl", "primary_muscle_group": "Hamstrings"},
+
+    {"name": "Hip Thrust", "primary_muscle_group": "Glutes"},
+    {"name": "Conventional Deadlift", "primary_muscle_group": "Back"}
+]
