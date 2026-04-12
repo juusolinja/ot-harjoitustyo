@@ -5,7 +5,7 @@ from ui.ui import UI
 def main():
     window = Tk()
     window.title("Workout tracker")
-    window.state("zoomed")
+    window.geometry("1400x800")
 
     ui = UI(window)
     ui.start()
