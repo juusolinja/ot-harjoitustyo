@@ -2,6 +2,8 @@
 
 Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
 
+[Linkki releaseen](https://github.com/juusolinja/ot-harjoitustyo/releases/tag/viikko5)
+
 ## Dokumentaatio
 - [Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)
 - [Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)
