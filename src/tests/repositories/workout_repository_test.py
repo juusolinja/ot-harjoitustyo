@@ -50,3 +50,5 @@ class TestWorkoutRepository(unittest.TestCase):
         self.assertEqual(fetched.sets[0].reps, self._workout.sets[0].reps)
         self.assertEqual(fetched.sets[0].weight, self._workout.sets[0].weight)
         self.assertEqual(fetched.sets[0].rir, self._workout.sets[0].rir)
+
+    

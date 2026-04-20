@@ -42,3 +42,8 @@ Testikattavuusraportin voi myös generoida ja avata suoraan komennolla:
 poetry run invoke open-coverage-report
 ```
 
+## Pylint
+Pylint-tarkistuksen voi suortittaa komennolla:
+```bash
+poetry run invoke lint
+```

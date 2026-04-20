@@ -1,3 +1,4 @@
+from datetime import datetime
 from entities.workout import Workout
 from entities.set_entry import SetEntry
 
@@ -5,18 +6,10 @@ from repositories.workout_repository import (
     workout_repository as default_workout_repository
 )
 
-from repositories.movement_repository import (
-    movement_repository as default_movement_repository
-)
-
 
 class WorkoutService:
-    def __init__(
-            self, workout_repository=default_workout_repository,
-            movement_repository=default_movement_repository
-        ):
+    def __init__(self, workout_repository=default_workout_repository):
         self._workout_repository = workout_repository
-        self._movement_repository = movement_repository
 
     def create_workout(self, title, date, duration, notes, sets):
         set_entries = [
@@ -40,14 +33,44 @@ class WorkoutService:
     def get_all_workout_summaries(self):
         return self._workout_repository.get_all_workout_summaries()
 
-    def get_all_movement_options(self):
-        return self._movement_repository.get_all_movement_options()
+    def validate_set(self, set_entry):
+        errors = {}
+        if not set_entry["movement"]:
+            errors["movement"] = "No movement selected"
+        try:
+            weight = float(set_entry["weight"])
+            if weight <= 0:
+                errors["weight"] = "> 0"
+        except ValueError:
+            errors["weight"] = "> 0"
+        try:
+            reps = int(set_entry["reps"])
+            if reps <= 0:
+                errors["reps"] = "> 0"
+        except ValueError:
+            errors["reps"] = "> 0"
+        try:
+            rir = int(set_entry["rir"])
+            if rir < -1:
+                errors["rir"] = "≥ -1"
+        except ValueError:
+            errors["rir"] = "≥ -1"
+        return errors
 
-    def validate_set(self):
-        return []
+    def validate_workout(self, workout_metadata, sets):
+        errors = {}
+        if not self._is_valid_date(workout_metadata["date"]):
+            errors["date"] = "Invalid"
+        if len(sets) == 0:
+            errors["general"] = "Workout must contain a set"
+        return errors
 
-    def validate_workout(self):
-        return []
+    def _is_valid_date(self, date_str, fmt="%Y-%m-%d"):
+        try:
+            datetime.strptime(date_str, fmt)
+            return True
+        except ValueError:
+            return False
 
     def update_workout(self, workout, pending_metadata, pending_sets):
         set_entires = [

@@ -25,6 +25,11 @@ class MuscleGroupRepository:
             for row in rows
         ]
 
+    def delete(self, muscle_group):
+        cursor = self._connection.cursor()
+        cursor.execute("DELETE FROM muscle_groups WHERE id = ?", (muscle_group.id,))
+        self._connection.commit()
+
     def delete_all(self):
         cursor = self._connection.cursor()
         cursor.execute("DELETE FROM muscle_groups")

@@ -6,3 +6,4 @@ htmlcov
 .DS_Store
 data/test.db
 data/database.db
+data/dev.db

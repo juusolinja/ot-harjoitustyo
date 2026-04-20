@@ -1,9 +1,11 @@
 from tkinter import Tk
 from ui.ui import UI
+from ui.styles import apply_styles
 
 
 def main():
     window = Tk()
+    apply_styles()
     window.title("Workout tracker")
     window.geometry("1400x800")
 

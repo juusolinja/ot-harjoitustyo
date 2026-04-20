@@ -1,3 +1,5 @@
+from entities.movement import Movement
+from entities.muscle_group import MuscleGroup
 from dto.movement_option import MovementOption
 from database.database_connection import get_database_connection
 
@@ -27,6 +29,32 @@ class MovementRepository:
         cursor = self._connection.cursor()
         cursor.execute("DELETE FROM movements")
         self._connection.commit()
+
+    def delete(self, movement):
+        cursor = self._connection.cursor()
+        cursor.execute("DELETE FROM movements WHERE id = ?", (movement.id,))
+        self._connection.commit()
+
+    def get_all(self):
+        cursor = self._connection.cursor()
+        cursor.execute(
+            """
+            SELECT mv.id, mv.name, mg.id AS mg_id, mg.name AS mg_name
+            FROM movements mv
+            JOIN muscle_groups mg ON mv.primary_muscle_group_id = mg.id
+            ORDER BY mv.name
+            """
+        )
+        return [
+            Movement(name=row["name"],
+                     movement_id=row["id"],
+                     primary_muscle_group=MuscleGroup(
+                         name=row["mg_name"],
+                         muscle_group_id=row["mg_id"]
+                     )
+            )
+            for row in cursor.fetchall()
+        ]
 
 
 movement_repository = MovementRepository(get_database_connection())

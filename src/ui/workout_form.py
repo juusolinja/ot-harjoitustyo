@@ -1,6 +1,8 @@
+from datetime import date
 import tkinter as tk
 from tkinter import ttk, constants
 from services.workout_service import workout_service
+from services.movement_service import movement_service
 
 
 class WorkoutForm:
@@ -11,17 +13,26 @@ class WorkoutForm:
         self._frame = ttk.Frame(master=root)
         self._selected_workout = None
         self._pending_sets = []
-        self._movements = workout_service.get_all_movement_options()
+        self._movements = movement_service.get_all_movement_options()
         self._selected_set_index = None
 
         self._title_var = tk.StringVar()
         self._date_var = tk.StringVar()
-        self._duration_var = tk.IntVar()
+        self._duration_var = tk.StringVar()
 
         self._movement_var = tk.StringVar()
-        self._reps_var = tk.IntVar()
-        self._weight_var = tk.DoubleVar()
-        self._rir_var = tk.IntVar()
+        self._reps_var = tk.StringVar()
+        self._weight_var = tk.StringVar()
+        self._rir_var = tk.StringVar()
+
+        self._date_error_var = tk.StringVar()
+
+        self._movement_error_var = tk.StringVar()
+        self._reps_error_var = tk.StringVar()
+        self._weight_error_var = tk.StringVar()
+        self._rir_error_var = tk.StringVar()
+
+        self._general_error_var = tk.StringVar()
 
         self._sets_tree = None
 
@@ -33,6 +44,7 @@ class WorkoutForm:
         self._build_metadata_section()
         self._build_sets_section()
         self._build_buttons()
+        self._handle_new()
 
     def grid(self):
         self._frame.grid(row=0, column=1, sticky=constants.NSEW)
@@ -46,20 +58,20 @@ class WorkoutForm:
         self.title_entry = ttk.Entry(
             master=frame, textvariable=self._title_var)
         self.title_entry.grid(
-            row=0, column=1, sticky=constants.EW, padx=(0, 10))
+            row=0, column=1, sticky=constants.EW)
 
         ttk.Label(master=frame, text="Date (YYYY-MM-DD):").grid(row=1,
                                                                 column=0, sticky=constants.W)
         self.date_entry = ttk.Entry(master=frame, textvariable=self._date_var)
         self.date_entry.grid(
-            row=1, column=1, sticky=constants.EW, padx=(0, 10))
+            row=1, column=1, sticky=constants.EW,)
 
         ttk.Label(master=frame, text="Duration (min):").grid(
             row=2, column=0, sticky=constants.W)
         self.duration_entry = ttk.Entry(
             master=frame, textvariable=self._duration_var)
         self.duration_entry.grid(
-            row=2, column=1, sticky=constants.EW, padx=(0, 10))
+            row=2, column=1, sticky=constants.EW)
 
         ttk.Label(master=frame, text="Notes:").grid(
             row=0, column=3, rowspan=3, sticky=constants.W)
@@ -80,6 +92,9 @@ class WorkoutForm:
 
         frame.grid(row=1, column=0, sticky=constants.NSEW)
 
+        self._date_error = ttk.Label(master=frame, style="Error.TLabel", textvariable=self._date_error_var)
+        self._date_error.grid(row=1, column=2, padx=(0, 10), sticky=constants.W)
+
     def _build_sets_section(self):
         sets_frame = ttk.Frame(master=self._frame)
         sets_frame.grid(row=2, column=0, sticky=constants.NSEW, pady=10)
@@ -94,7 +109,7 @@ class WorkoutForm:
         )
         self._sets_tree.heading("#0", text="Movement / Set")
         self._sets_tree.heading("weight", text="Weight (kg)")
-        self._sets_tree.heading("reps", text="reps")
+        self._sets_tree.heading("reps", text="Reps")
         self._sets_tree.heading("rir", text="RIR")
         self._sets_tree.grid(row=0, column=0, sticky=constants.NSEW)
 
@@ -147,6 +162,18 @@ class WorkoutForm:
             entry_frame, text="Delete set", state="disabled", command=self._handle_delete_set)
         self.delete_set_button.grid(row=1, column=5, padx=(0, 5))
 
+        self._movement_error = ttk.Label(entry_frame, style="Error.TLabel", textvariable=self._movement_error_var)
+        self._movement_error.grid(row=2, column=0)
+        
+        self._weight_error = ttk.Label(entry_frame, style="Error.TLabel", textvariable=self._weight_error_var)
+        self._weight_error.grid(row=2, column=1)
+
+        self._reps_error = ttk.Label(entry_frame, style="Error.TLabel", textvariable=self._reps_error_var)
+        self._reps_error.grid(row=2, column=2)
+
+        self._rir_error = ttk.Label(entry_frame, style="Error.TLabel", textvariable=self._rir_error_var)
+        self._rir_error.grid(row=2, column=3)
+
     def _build_buttons(self):
         buttons_frame = ttk.Frame(master=self._frame)
         buttons_frame.grid(
@@ -154,19 +181,22 @@ class WorkoutForm:
 
         self.new_button = ttk.Button(
             buttons_frame, text="New", command=self._handle_new)
-        self.new_button.grid(row=0, column=0, padx=(0, 5))
+        self.new_button.grid(row=1, column=0, padx=(0, 5))
 
         self.save_button = ttk.Button(
             buttons_frame, text="Save", state="disabled", command=self._handle_save)
-        self.save_button.grid(row=0, column=1, padx=(0, 5))
+        self.save_button.grid(row=1, column=1, padx=(0, 5))
 
         self.cancel_button = ttk.Button(
             buttons_frame, text="Cancel", state="disabled", command=self._handle_cancel)
-        self.cancel_button.grid(row=0, column=2, padx=(0, 5))
+        self.cancel_button.grid(row=1, column=2, padx=(0, 5))
 
         self.delete_workout_button = ttk.Button(
             buttons_frame, text="Delete workout", state="disabled", command=self._handle_delete_workout)
-        self.delete_workout_button.grid(row=0, column=3, padx=(0, 5))
+        self.delete_workout_button.grid(row=1, column=3, padx=(0, 5))
+
+        self._general_error = ttk.Label(buttons_frame, style="Error.TLabel", textvariable=self._general_error_var)
+        self._general_error.grid(row=0, column=0, columnspan=2)
 
     def _clear_metadata_entries(self):
         self._title_var.set("")
@@ -191,6 +221,7 @@ class WorkoutForm:
 
     def _handle_new(self):
         self._clear_form()
+        self._clear_errors()
         self._clear_selection_on_new()
         self._selected_workout = None
         self._selected_set_index = None
@@ -200,32 +231,41 @@ class WorkoutForm:
         self._new_set_button.configure(state="normal")
         self.add_update_button.configure(state="normal")
         self.delete_set_button.configure(state="disabled")
+        self._date_var.set(date.today().isoformat())
 
     def _handle_save(self):
-        errors = workout_service.validate_workout()
-        if errors:
-            return
+        workout_metadata = {}
+        workout_metadata["title"] = self._title_var.get()
+        workout_metadata["date"] = self._date_var.get()
+        workout_metadata["duration"] = self._duration_var.get()
+        workout_metadata["notes"] = self.notes_text.get("1.0", "end-1c")
 
-        if self._selected_workout is None:
-            workout = workout_service.create_workout(
-                title=self._title_var.get(),
-                date=self._date_var.get(),
-                duration=self._duration_var.get(),
-                notes=self.notes_text.get("1.0", "end-1c"),
-                sets=self._pending_sets
-            )
-            self._selected_workout = workout
+        errors = workout_service.validate_workout(workout_metadata, self._pending_sets)
+        if errors:
+            for entry, error in errors.items():
+                getattr(self, f"_{entry}_error_var").set(error)
         else:
-            pending_metadata = {
-                "title": self._title_var.get(),
-                "date": self._date_var.get(),
-                "duration": self._duration_var.get(),
-                "notes": self.notes_text.get("1.0", "end-1c")
-            }
-            updated_workout = workout_service.update_workout(
-                self._selected_workout, pending_metadata, self._pending_sets)
-            self._selected_workout = updated_workout
-        self._refresh_list(self._selected_workout.id)
+            self._clear_errors()
+            if self._selected_workout is None:
+                workout = workout_service.create_workout(
+                    title=self._title_var.get().strip() or "Untitled",
+                    date=self._date_var.get(),
+                    duration=self._duration_var.get(),
+                    notes=self.notes_text.get("1.0", "end-1c"),
+                    sets=self._pending_sets
+                )
+                self._selected_workout = workout
+            else:
+                pending_metadata = {
+                    "title": self._title_var.get(),
+                    "date": self._date_var.get(),
+                    "duration": self._duration_var.get(),
+                    "notes": self.notes_text.get("1.0", "end-1c")
+                }
+                updated_workout = workout_service.update_workout(
+                    self._selected_workout, pending_metadata, self._pending_sets)
+                self._selected_workout = updated_workout
+            self._refresh_list(self._selected_workout.id)
 
     def _on_set_select(self, event):
         selected = self._sets_tree.selection()
@@ -251,25 +291,28 @@ class WorkoutForm:
     def _handle_add_update_set(self):
         movement = next((m for m in self._movements if m.name ==
                         self._movement_var.get()), None)
-        if movement is None:
-            return
         weight = self._weight_var.get()
         reps = self._reps_var.get()
         rir = self._rir_var.get()
-        errors = workout_service.validate_set()
-        if not errors:
-            set_dict = {
-                "movement": movement,
-                "weight": weight,
-                "reps": reps,
-                "rir": rir,
-            }
+        set_entry = {
+            "movement": movement,
+            "weight": weight,
+            "reps": reps,
+            "rir": rir
+        }
+        errors = workout_service.validate_set(set_entry)
+        if errors:
+            self._clear_set_errors()
+            for entry, error in errors.items():
+                getattr(self, f"_{entry}_error_var").set(error)
+        else:
             if self._selected_set_index is None:
-                self._pending_sets.append(set_dict)
+                self._pending_sets.append(set_entry)
             else:
-                self._pending_sets[self._selected_set_index] = set_dict
+                self._pending_sets[self._selected_set_index] = set_entry
                 self._clear_set_selection()
             self._refresh_sets_tree()
+        
 
     def _clear_set_selection(self):
         self._selected_set_index = None
@@ -342,3 +385,22 @@ class WorkoutForm:
         self.delete_workout_button.configure(state="normal")
         self._new_set_button.configure(state="normal")
         self.delete_set_button.configure(state="disabled")
+        self._clear_set_entries()
+        self._clear_errors()
+
+    def _clear_errors(self):
+        self._clear_metadata_errors()
+        self._clear_set_errors()
+        
+    def _clear_metadata_errors(self):
+        getattr(self, "_date_error_var").set("")
+        getattr(self, "_general_error_var").set("")
+
+    def _clear_set_errors(self):
+        errors = ["movement", "weight", "reps", "rir"]
+        for error in errors:
+            getattr(self, f"_{error}_error_var").set("")
+
+    def refresh_movement_options(self):
+        self._movements = movement_service.get_all_movement_options()
+        self.movement_dropdown["values"] = [m.name for m in self._movements]

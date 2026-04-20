@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS workouts (
 CREATE TABLE IF NOT EXISTS movements (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
-    primary_muscle_group_id INTEGER NOT NULL REFERENCES muscle_groups(id)
+    primary_muscle_group_id INTEGER NOT NULL REFERENCES muscle_groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS muscle_groups (

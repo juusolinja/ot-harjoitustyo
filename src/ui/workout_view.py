@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, constants
+from tkinter import constants
 from ui.workout_list import WorkoutsList
 from ui.workout_form import WorkoutForm
 from services.workout_service import workout_service
@@ -24,8 +24,11 @@ class WorkoutView:
         self._workout_list.grid()
         self._workout_form.grid()
 
-    def pack(self):
-        self._frame.pack(fill=constants.BOTH, expand=True)
+    def grid(self):
+        self._frame.grid(row=1, column=0, sticky=constants.NSEW)
+
+    def tkraise(self):
+        self._frame.tkraise()
 
     def _handle_select_workout(self, workout_id):
         workout = workout_service.get_workout_by_id(workout_id)
@@ -36,3 +39,6 @@ class WorkoutView:
 
     def _clear_selection_on_new(self):
         self._workout_list._clear_selection()
+
+    def refresh_movement_options(self):
+        self._workout_form.refresh_movement_options()
