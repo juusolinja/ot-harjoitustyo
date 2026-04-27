@@ -2,7 +2,7 @@
 
 Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
 
-[Linkki releaseen](https://github.com/juusolinja/ot-harjoitustyo/releases/tag/viikko5)
+[Linkki uusimpaan releaseen](https://github.com/juusolinja/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Dokumentaatio
 - [Käyttöohje](dokumentaatio/kayttoohje.md)
