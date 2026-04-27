@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 from entities.workout import Workout
 from entities.set_entry import SetEntry
@@ -8,10 +9,34 @@ from repositories.workout_repository import (
 
 
 class WorkoutService:
+    """Treeneihin liittyvästä logiikasta vastaava luokka
+    """
+
     def __init__(self, workout_repository=default_workout_repository):
+        """Luokan konstruktori
+
+        Args:
+            workout_repository:
+                Vapaaehtoinen, oletusarvoltaan WorkoutRepository-olio
+                Olio, jolla on WorkoutRepository-luokkaa vastaavat metodit
+        """
+
         self._workout_repository = workout_repository
 
     def create_workout(self, title, date, duration, notes, sets):
+        """Luo treenin
+
+        Args:
+            title: Merkkijonoarvo, joka kuvaa treenin nimeä
+            date: Merkkijonoarvo, joka kuvaa treenin päivämäärää
+            duration: Kokonaisluku, joka kuvaa treenin kestoa
+            notes: Merkkijonoarvo, joka kuvaa treenin muistiinpanoja
+            sets: Lista kirjastoja, jotka kuvaa tehtyjä sarjoja
+
+        Returns:
+            Palauttaa luodun treenin Workout-oliona
+        """
+
         set_entries = [
             SetEntry(
                 movement=s["movement"],
@@ -28,12 +53,38 @@ class WorkoutService:
         return workout
 
     def get_workout_by_id(self, workout_id):
+        """Palauttaa treenin id:n perusteella
+
+        Args:
+            workout_id: Palautettavan treenin id
+
+        Returns:
+            Palauttaa Workout-olion, jos on olemassa treeni kyseisellä id:llä
+            Muussa tapauksessa None
+        """
+
         return self._workout_repository.get_by_id(workout_id)
 
     def get_all_workout_summaries(self):
+        """Palauttaa treenien tiivistelmät
+
+        Returns:
+            Palauttaa listan WorkoutSummary-olioita
+        """
+
         return self._workout_repository.get_all_workout_summaries()
 
     def validate_set(self, set_entry):
+        """Validoi sarjan sisällön
+
+        Args:
+            set_entry: Validoitava sarja SetEntry-oliona
+
+        Returns:
+            Palauttaa kirjaston, jossa avaimena on virheellinen syöte merkkijonoarvona
+            ja arvona on virheviesti merkkijononarvona
+        """
+
         errors = {}
         if not set_entry["movement"]:
             errors["movement"] = "No movement selected"
@@ -66,6 +117,8 @@ class WorkoutService:
         return errors
 
     def _is_valid_date(self, date_str, fmt="%Y-%m-%d"):
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_str):
+            return False
         try:
             datetime.strptime(date_str, fmt)
             return True
@@ -94,6 +147,5 @@ class WorkoutService:
 
     def delete_workout(self, workout):
         self._workout_repository.delete(workout)
-
 
 workout_service = WorkoutService()

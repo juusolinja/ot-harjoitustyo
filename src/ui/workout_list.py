@@ -47,7 +47,7 @@ class WorkoutsList:
 
     def _on_select(self, event):
         workout_id = self._get_selected_id()
-        if workout_id == None:
+        if workout_id is None:
             return
         self._handle_select_workout(workout_id)
 

@@ -20,3 +20,8 @@
 - Uudet luokat WorkoutRepository ja MuscleGroupRepository, jotka vastaavat liikkeiden ja lihasryhmien tietokantaoperaatioista
 - Uudet luokat WorkoutService ja MuscleGroupService, jotka tarjoavat liikkeisiin ja lihasryhmiin liittyviä palveluita
 - Testattu, että WorkoutService-luokka luo treenin oikein ja validoi sarjan oikein
+
+## Viikko 6
+
+- Luotu analyysinäkymä
+- Testattu, että AnalysisService-luokka toimii oikein

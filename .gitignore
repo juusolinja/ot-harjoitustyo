@@ -7,3 +7,4 @@ htmlcov
 data/test.db
 data/database.db
 data/dev.db
+.env

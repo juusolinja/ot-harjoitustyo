@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS muscle_groups (
 CREATE TABLE IF NOT EXISTS set_entries (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     workout_id INTEGER NOT NULL REFERENCES workouts(id) ON DELETE CASCADE,
-    movement_id INTEGER NOT NULL REFERENCES movements(id),
+    movement_id INTEGER NOT NULL REFERENCES movements(id) ON DELETE CASCADE,
     set_order INTEGER NOT NULL,
     reps INTEGER NOT NULL,
     weight REAL NOT NULL,

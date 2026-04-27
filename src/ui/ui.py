@@ -1,6 +1,7 @@
 from tkinter import ttk, constants
 from ui.workout_view import WorkoutView
 from ui.movement_view import MovementManagementView
+from ui.analysis_view import AnalysisView
 
 
 class UI:
@@ -16,14 +17,17 @@ class UI:
     def _build_navbar(self):
         navbar = ttk.Frame(master=self._frame)
         navbar.grid(row=0, column=0, sticky=constants.EW)
-        ttk.Button(navbar, text="Workouts", command=self._show_workout_view).grid(row=0, column=0, padx=(0, 5))
-        ttk.Button(navbar, text="Movements", command=self._show_movement_view).grid(row=0, column=1, padx=(0, 5))
+        ttk.Button(navbar, text="Workouts", command=self._show_workout_view).grid(row=0, column=0, padx=(5, 0))
+        ttk.Button(navbar, text="Movements", command=self._show_movement_view).grid(row=0, column=1, padx=(5, 0))
+        ttk.Button(navbar, text="Analysis", command=self._show_analysis_view).grid(row=0, column=2, padx=(5, 0))
 
     def _build_views(self):
         self._workout_view = WorkoutView(self._frame)
         self._movement_view = MovementManagementView(self._frame, self._refresh_movement_options)
+        self._analysis_view = AnalysisView(self._frame)
         self._workout_view.grid()
         self._movement_view.grid()
+        self._analysis_view.grid()
         self._show_workout_view()
 
     def _show_workout_view(self):
@@ -32,6 +36,9 @@ class UI:
     def _show_movement_view(self):
         self._movement_view.refresh()
         self._movement_view.tkraise()
+
+    def _show_analysis_view(self):
+        self._analysis_view.tkraise()
 
     def start(self):
         self._show_workout_view()
