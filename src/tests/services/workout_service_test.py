@@ -58,4 +58,3 @@ class TestWorkoutService(unittest.TestCase):
 
         self.assertIn("date", errors)
         self.assertIn("general", errors)
-    

@@ -27,7 +27,7 @@ class Workout:
                 Kokonaisluku, joka kuvaa treenin kestoa.
             sets: Lista SetEntry-olioita, joka kuvaa treenissä tehtyjä sarjoja.
         """
-        
+
         self.title = title
         self.date = date
         self.notes = notes

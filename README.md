@@ -10,6 +10,7 @@ Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
 - [Työaikakirjanpito](dokumentaatio/tuntikirjanpito.md)
 - [Changelog](dokumentaatio/changelog.md)
 - [Arkkitehtuurikuvaus](dokumentaatio/arkkitehtuuri.md)
+- [Testausdokumentti](dokumentaatio/testaus.md)
 
 ## Sovelluksen asennus ja käynnistys
 

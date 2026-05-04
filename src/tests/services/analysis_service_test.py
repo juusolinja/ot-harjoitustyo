@@ -14,20 +14,20 @@ class TestAnalysisService(unittest.TestCase):
         self._default_muscle_group = MuscleGroup("Chest", 0)
         self._default_movement = Movement("Bench Press", self._default_muscle_group, 0)
         self._workout_a = Workout(
-            "Monday",
-            monday,
-            "",
-            100,
-            60,
-            [SetEntry(self._default_movement, 10, 100, 1)]
+            title="Monday",
+            date=monday,
+            notes="",
+            workout_id=100,
+            duration=60,
+            sets=[SetEntry(self._default_movement, 10, 100, 1)]
         )
         self._workout_b = Workout(
-            "Sunday",
-            sunday,
-            "",
-            101,
-            60,
-            [SetEntry(self._default_movement, 10, 100, 1)]
+            title="Sunday",
+            date=sunday,
+            notes="",
+            workout_id=101,
+            duration=60,
+            sets=[SetEntry(self._default_movement, 10, 100, 1)]
         )
         self._workout_repo = FakeWorkoutRepository([self._workout_a, self._workout_b])
         self._muscle_group_repo = FakeMuscleGroupRepository([self._default_muscle_group])
