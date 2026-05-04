@@ -1,6 +1,4 @@
-# Ohjelmistotekniikka harjoitustyö
-
-Olen **tekemässä** *treeni kirjanpito-ohjelmaa*
+# Treeni kirjanpito-ohjelma
 
 [Linkki uusimpaan releaseen](https://github.com/juusolinja/ot-harjoitustyo/releases/tag/viikko6)
 
