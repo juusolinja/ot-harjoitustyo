@@ -1,6 +1,6 @@
 # Treeni kirjanpito-ohjelma
 
-[Linkki uusimpaan releaseen](https://github.com/juusolinja/ot-harjoitustyo/releases/tag/viikko6)
+[Linkki uusimpaan releaseen](https://github.com/juusolinja/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ## Dokumentaatio
 - [Käyttöohje](dokumentaatio/kayttoohje.md)
